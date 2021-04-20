@@ -1,0 +1,131 @@
+body
+  font-size: 16px
+  font-family: 'Quicksand', sans-serif
+  min-height: 100vh
+
+h1
+  text-align: center
+  margin-bottom: 30px
+
+.text-center
+  text-align: center
+
+.site
+  margin: 1vh auto
+  width: 960px
+  min-height: 100vh
+
+.d-flex
+  display: flex
+  justify-content: center
+  align-items: center
+
+.grid
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+  gap: 1vh
+
+.loading
+  display: flex
+  justify-content: center
+  align-items: center
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+.pokemons
+  &__pokemon
+    display: flex
+    flex-direction: column-reverse
+    justify-content: center
+    align-items: center
+    color: black
+    text-decoration: none
+    position: relative
+    background: #F1F1F1
+    padding: 1em
+    border: 1px solid #AAA
+    border-radius: 10px
+    transition: all .2s linear
+    overflow: hidden
+    &:hover
+      transform: scale(1.2)
+      z-index: 2
+  .pokemon
+    &-id
+      position: absolute
+      top: .5em
+      left: .5em
+    &-types
+      width: 100%
+      text-align: center
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(10%, 1fr))
+      position: absolute
+      top: -2px
+      left: 50%
+      transform: translateX(-50%)
+      & > span:first-child
+        border-top-left-radius: 30px
+      & > span:last-child
+        border-top-right-radius: 30px
+    &-type
+      display: inline-block
+      width: 100%
+      height: 6px
+
+.poison
+  background: #8F3C98
+.fire
+  background: #F17F2B
+.grass
+  background: #79C356
+.water
+  background: #6A90E8
+.bug
+  background: #A9B620
+.normal
+  background: #A9AA74
+.flying
+  background: #A694E1
+.electric
+  background: #EBD140
+.ground
+  background: #E1C781
+.fairy
+  background: #DDA3DC
+.fighting
+  background: #B7312F
+.psychic
+  background: #F55C8F
+.rock
+  background: #C1A536
+.steel
+  background: #B8B7D1
+.ghost
+  background: #735F8A
+.ice
+  background: #9AD7D9
+.dragon
+  background: #743EF0
+
+.filters
+  margin-bottom: 20px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  input[type="text"], select
+    padding: 5px 10px
+    min-width: 200px
+    background: #F1F1F1
+    border: 1px solid #AAA
+    color: black
+    border-radius: 10px
+    outline: none
+    transition: all .3s linear
+    &:focus
+      border-color: #1a1a1a
+  select
+    padding: 4px 5px
