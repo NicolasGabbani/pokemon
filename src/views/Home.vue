@@ -38,8 +38,8 @@
           :to="`/pokemon/${getID(pokemon)}`"
           class="animate__animated pokemons__pokemon"
           :class="{'animate__fadeIn': !loading || !noResult}"
-          @mouseenter="hoverImg = index"
-          @mouseleave="hoverImg = null"
+          @mouseenter.native="hoverImg = index"
+          @mouseleave.native="hoverImg = null"
         >
           <div class="pokemon-id">#{{getID(pokemon)}}</div>
           <div class="pokemon-name">{{getName(pokemon)}}</div>
