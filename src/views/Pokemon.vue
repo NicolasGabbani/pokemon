@@ -94,8 +94,11 @@ export default {
 </script>
 
 <style lang="sass">
+  @media screen and (max-width:375px)
+    .modal
+      height: 90vh !important
   .modal
-    width: 900px
+    width: min(90vw, 900px)
     height: 70vh
     position: fixed
     top: 50%
@@ -108,14 +111,13 @@ export default {
     border-radius: 10px
   .this-pokemon
     display: grid
-    grid-template-columns: 2fr 1fr
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))
     gap: 50px
   .col
     display: flex
     flex-direction: column
     justify-content: center
     align-content: center
-
   .types
     margin-top: 30px
     display: flex
