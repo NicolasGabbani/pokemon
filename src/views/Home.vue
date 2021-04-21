@@ -7,7 +7,8 @@
       <router-view @closeModal="closeModal"></router-view>
     </div>
 
-    <h1>Pokemon 1ère génération</h1>
+    <h1 class="logo"><img :src="require('@/assets/images/logo.png')" alt="" /></h1>
+
     <Loading :loading="loading" />
     <template v-if="!loading">
       <div class="filters">
@@ -16,56 +17,63 @@
           v-model="filter_search"
           placeholder="Recherchez un pokémon..."
         />
-        <select v-model="filter_type">
-          <option value="">Filtrer par type...</option>
-          <option value="steel">Acier</option>
-          <option value="fighting">Combat</option>
-          <option value="dragon">Dragon</option>
-          <option value="water">Eau</option>
-          <option value="electric">Electrik</option>
-          <option value="fairy">Fée</option>
-          <option value="fire">Feu</option>
-          <option value="ice">Glace</option>
-          <option value="bug">Insecte</option>
-          <option value="normal">Normal</option>
-          <option value="grass">Plante</option>
-          <option value="poison">Poison</option>
-          <option value="psychic">Psy</option>
-          <option value="rock">Roche</option>
-          <option value="ground">Sol</option>
-          <option value="ghost">Spectre</option>
-          <option value="flying">Vol</option>
-        </select>
+        <div class="select">
+          <select v-model="filter_type" required>
+            <option value="" disabled selected>Filtrer par type...</option>
+            <option value="">Tous</option>
+            <option value="steel">Acier</option>
+            <option value="fighting">Combat</option>
+            <option value="dragon">Dragon</option>
+            <option value="water">Eau</option>
+            <option value="electric">Electrik</option>
+            <option value="fairy">Fée</option>
+            <option value="fire">Feu</option>
+            <option value="ice">Glace</option>
+            <option value="bug">Insecte</option>
+            <option value="normal">Normal</option>
+            <option value="grass">Plante</option>
+            <option value="poison">Poison</option>
+            <option value="psychic">Psy</option>
+            <option value="rock">Roche</option>
+            <option value="ground">Sol</option>
+            <option value="ghost">Spectre</option>
+            <option value="flying">Vol</option>
+          </select>
+        </div>
       </div>
       <div class="grid pokemons">
         <div class="animate__animated animate__shakeX" v-if="noResult">
           pas de résultat
         </div>
-        <router-link
+        <div
           v-for="(pokemon, index) in filteredPkms || orderedPkms"
           :key="pokemon.id"
-          :to="`/pokemon/${getID(pokemon)}`"
-          class="animate__animated pokemons__pokemon"
-          :class="{ animate__fadeIn: !loading || !noResult }"
-          @mouseenter.native="hoverImg = index"
-          @mouseleave.native="hoverImg = null"
+          data-aos="flip-up"
         >
-          <div class="pokemon-id">#{{ getID(pokemon) }}</div>
-          <div class="pokemon-name">{{ getName(pokemon) }}</div>
-          <img
-            :src="hoverImg == index ? getSpriteShiny(pokemon) : getSprite(pokemon)"
-            :alt="getName(pokemon)"
-            class="pokemon-img"
-          />
-          <div class="pokemon-types">
-            <span
-              class="pokemon-type"
-              :class="type"
-              v-for="type in pokemon.types"
-              :key="type"
-            ></span>
-          </div>
-        </router-link>
+          <router-link
+            :to="`/pokemon/${getID(pokemon)}`"
+            replace
+            class="pokemons__pokemon"
+            @mouseenter.native="hoverImg = index"
+            @mouseleave.native="hoverImg = null"
+          >
+            <div class="pokemon-id">#{{ getID(pokemon) }}</div>
+            <div class="pokemon-name">{{ getName(pokemon) }}</div>
+            <img
+              :src="hoverImg == index ? getSpriteShiny(pokemon) : getSprite(pokemon)"
+              :alt="getName(pokemon)"
+              class="pokemon-img"
+            />
+            <div class="pokemon-types">
+              <span
+                class="pokemon-type"
+                :class="type"
+                v-for="type in pokemon.types"
+                :key="type"
+              ></span>
+            </div>
+          </router-link>
+        </div>
       </div>
     </template>
   </div>
@@ -76,6 +84,8 @@ import axios from "axios";
 import _ from "lodash";
 import "animate.css";
 import Loading from "@/components/Loading.vue";
+import AOS from "aos";
+import "aos/dist/aos.css";
 export default {
   name: "Home",
   components: {
@@ -103,7 +113,7 @@ export default {
         for (let pokemon in this.pokemons) {
           this.getPokemon(this.pokemons[pokemon]);
         }
-        this.loading = false;
+        AOS.init();
       });
   },
   methods: {
@@ -128,6 +138,9 @@ export default {
                 typesArr.push(pokemon?.types[index].type.name);
               }
               this.arrayPokemons.find((p) => p.id == pokemon.id).types = typesArr;
+              if (this.arrayPokemons.length == 151) {
+                this.loading = false;
+              }
             });
         });
     },

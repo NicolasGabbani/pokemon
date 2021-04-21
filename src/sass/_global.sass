@@ -6,9 +6,8 @@ body
 h1
   text-align: center
   margin: 30px 0
-  font-family: 'Bangers', cursive
-  font-size: 3rem
-  letter-spacing: 1px
+  img
+    width: 200px
 
 .text-center
   text-align: center
@@ -49,35 +48,39 @@ h1
     position: relative
     background: #F1F1F1
     padding: 1em
-    border: 1px solid #AAA
-    border-radius: 10px
+    border: 1px solid #CCC
+    border-right-width: 4px
+    border-bottom-width: 4px
+    border-radius: 3px
     transition: all .2s linear
     overflow: hidden
     &:hover
-      transform: scale(1.2)
-      z-index: 2
+      border-color: #AAA
+      .pokemon-img
+        transform: scale(1.2)
   .pokemon
     &-id
       position: absolute
       top: .5em
       left: .5em
+    &-img
+      transition: all .3s linear
     &-types
       width: 100%
       text-align: center
       display: grid
       grid-template-columns: repeat(auto-fit, minmax(10%, 1fr))
+      gap: 4px
+      padding: 0 4px
       position: absolute
-      top: -2px
+      top: 2px
       left: 50%
       transform: translateX(-50%)
-      & > span:first-child
-        border-top-left-radius: 30px
-      & > span:last-child
-        border-top-right-radius: 30px
     &-type
       display: inline-block
       width: 100%
       height: 6px
+      border-radius: 2px
 
 .poison
   background: #8F3C98
@@ -131,4 +134,23 @@ h1
     &:focus
       border-color: #1a1a1a
   select
+    -webkit-appearance: none
+    -moz-appearance: none
+    text-indent: 1px
+    text-overflow: ''
     padding: 4px 5px
+    &:invalid
+      color: #aaa
+    option
+      color: black
+      &[value=""][disabled]
+        display: none
+  .select
+    position: relative
+    &::after
+      content: ">"
+      position: absolute
+      top: 50%
+      transform: translateY(-50%) rotate(90deg)
+      right: 5px
+      font-family: cursive

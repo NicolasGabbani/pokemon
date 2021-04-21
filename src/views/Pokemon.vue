@@ -7,6 +7,7 @@
       :class="{ animate__fadeIn: !loading }"
     >
       <div class="col">
+        <span class="id">{{ pokemon.id }}</span>
         <button class="back" @click.prevent="$emit('closeModal')">X</button>
         <h1>{{ namePkm }}</h1>
         <p class="text-center">{{ descPkm }}</p>
@@ -124,6 +125,14 @@ export default {
   display: grid
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))
   gap: 50px
+  .id
+    position: absolute
+    top: 10px
+    left: 15px
+    font-weight: bold
+    font-size: 1.4rem
+    &::before
+      content: '#'
 .col
   display: flex
   flex-direction: column
