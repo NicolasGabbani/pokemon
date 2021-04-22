@@ -113,7 +113,6 @@ export default {
         for (let pokemon in this.pokemons) {
           this.getPokemon(this.pokemons[pokemon]);
         }
-        AOS.init();
       });
   },
   methods: {
@@ -140,6 +139,7 @@ export default {
               this.arrayPokemons.find((p) => p.id == pokemon.id).types = typesArr;
               if (this.arrayPokemons.length == 151) {
                 this.loading = false;
+                AOS.init();
               }
             });
         });
