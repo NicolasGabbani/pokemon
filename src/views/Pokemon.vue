@@ -123,8 +123,10 @@ export default {
   border-radius: 10px
 .this-pokemon
   display: grid
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr))
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))
   gap: 50px
+  img
+    display: block
   .id
     position: absolute
     top: 10px
