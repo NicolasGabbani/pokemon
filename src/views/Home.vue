@@ -48,7 +48,8 @@
         <div
           v-for="(pokemon, index) in filteredPkms || orderedPkms"
           :key="pokemon.id"
-          data-aos="flip-up"
+          data-aos="zoom-in"
+          data-aos-anchor-placement="center-bottom"
         >
           <router-link
             :to="`/pokemon/${getID(pokemon)}`"
@@ -62,7 +63,8 @@
             <img
               :src="hoverImg == index ? getSpriteShiny(pokemon) : getSprite(pokemon)"
               :alt="getName(pokemon)"
-              class="pokemon-img"
+              class="pokemon-img animate__animated"
+              :class="{ animate__fadeIn: pokemon.loaded }"
             />
             <div class="pokemon-types">
               <span
@@ -126,7 +128,7 @@ export default {
           axios
             .get(pokemon?.species.url)
             .then((response) => (infoPkm = response.data))
-            .finally(() => {
+            .finally(async () => {
               this.arrayPokemons.push(infoPkm);
               this.arrayPokemons.find((p) => p.id == pokemon.id).sprite =
                 pokemon?.sprites.front_default;
@@ -137,12 +139,24 @@ export default {
                 typesArr.push(pokemon?.types[index].type.name);
               }
               this.arrayPokemons.find((p) => p.id == pokemon.id).types = typesArr;
+
+              await this.loadImg(pokemon?.sprites.front_default).then(() => {
+                this.arrayPokemons.find((p) => p.id == pokemon.id).loaded = true;
+              });
+
               if (this.arrayPokemons.length == 151) {
                 this.loading = false;
                 AOS.init();
               }
             });
         });
+    },
+    loadImg(src) {
+      return new Promise((resolve) => {
+        let img = new Image();
+        img.src = src;
+        img.onload = () => resolve();
+      });
     },
     getName(pkm) {
       return pkm?.names.find((name) => name.language.name == "fr").name;
